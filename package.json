@@ -1,0 +1,29 @@
+{
+  "engines": {
+    "node": ">= 4"
+  },
+  "main": "index.js",
+  "license": "MIT",
+  "name": "eslint-import-resolver-alias",
+  "version": "1.0.0",
+  "description": "a simple Node behavior import resolution plugin for eslint-plugin-import, supporting module alias.",
+  "scripts": {
+    "test": "mocha test/test.js",
+    "cov": "istanbul cover node_modules/mocha/bin/_mocha -i index.js -- test/test.js"
+  },
+  "keywords": [
+    "eslint",
+    "eslintplugin",
+    "modules",
+    "alias",
+    "eslint-plugin-import"
+  ],
+  "author": "johvin",
+  "devDependencies": {
+    "istanbul": "^1.0.0-alpha.2",
+    "mocha": "^3.2.0"
+  },
+  "dependencies": {
+    "resolve": "^1.1.7"
+  }
+}
