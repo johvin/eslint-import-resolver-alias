@@ -1,0 +1,13 @@
+sudo: false
+language: node_js
+node_js:
+  - "4"
+  - "5"
+  - "6"
+  - "iojs"
+script:
+  - "npm run cov"
+after_script:
+  - "npm install coveralls@2.11.x && cat coverage/lcov.info | coveralls"
+matrix:
+  fast_finish: true
