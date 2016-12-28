@@ -6,9 +6,9 @@
 const path = require('path');
 const coreModules = {};
 
-require('resolve/lib/core.json').forEach(m => {
-  coreModules[m] = true
-});
+require('./core.json').forEach(function (m) {
+  this[m] = true
+}, coreModules);
 
 exports.interfaceVersion = 2;
 

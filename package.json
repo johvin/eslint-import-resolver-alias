@@ -22,8 +22,5 @@
   "devDependencies": {
     "istanbul": "^1.0.0-alpha.2",
     "mocha": "^3.2.0"
-  },
-  "dependencies": {
-    "resolve": "^1.1.7"
   }
 }
