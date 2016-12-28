@@ -8,8 +8,8 @@
   "version": "1.0.1",
   "description": "a simple Node behavior import resolution plugin for eslint-plugin-import, supporting module alias.",
   "scripts": {
-    "test": "mocha test/test.js",
-    "cov": "istanbul cover node_modules/mocha/bin/_mocha -i index.js -- test/test.js"
+    "test": "mocha test/test.js --require test/setup.js",
+    "cov": "istanbul cover node_modules/mocha/bin/_mocha -i index.js -- test/test.js --require test/setup.js"
   },
   "keywords": [
     "eslint",
