@@ -1,3 +1,4 @@
+'use strict';
 /**
  * this resolver is used as a plugin of eslint-plugin-import
  * to solve npm package mapping problem
