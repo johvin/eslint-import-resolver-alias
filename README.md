@@ -34,6 +34,10 @@ Note:
     + The second string represents the module alias
 - The order of 'material-ui/DatePicker' and 'material-ui' cannot be reversed, otherwise the alias rule 'material-ui/DatePicker' does not work.
 
+## Note
+
+`eslint-import-resolver-alias` 1.0.0 depends on part of `resolve` 1.1.7 which changes its format from 1.2.0 and the resolve dependency is resolved as ^1.1.7 in package.json dependencies settings. So update `eslint-import-resolver-alias` to 1.0.1 is the correct way.
+
 ## CHANGELOG
 
 [`CHANGELOG`](./CHANGELOG.md)
