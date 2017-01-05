@@ -46,7 +46,6 @@ exports.resolve = (modulePath, sourceFile, config) => {
   }
 
   const paths = resolveLookupPaths(findPath, sourceDir);
-  console.log('paths', paths);
   return findModulePath(findPath, paths);
 };
 
