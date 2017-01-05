@@ -14,7 +14,6 @@ require('./core.json').forEach(function (m) {
 exports.interfaceVersion = 2;
 
 const Module = module.constructor;
-const cwd = process.cwd();
 
 exports.resolve = (modulePath, sourceFile, config) => {
   const isRelativePath = modulePath[0] === '.';
@@ -47,6 +46,7 @@ exports.resolve = (modulePath, sourceFile, config) => {
   }
 
   const paths = resolveLookupPaths(findPath, sourceDir);
+  console.log('paths', paths);
   return findModulePath(findPath, paths);
 };
 
@@ -67,7 +67,7 @@ function resolveLookupPaths(modulePath, absoluteSourceDir) {
     let p = curDir + path.sep + 'node_modules';
     paths.push(p);
     nextDir = path.resolve(curDir, '..');
-  } while(nextDir !== curDir && curDir !== cwd);
+  } while(nextDir !== curDir);
 
   paths.push.apply(paths, Module.globalPaths);
   return paths;

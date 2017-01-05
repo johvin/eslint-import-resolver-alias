@@ -49,4 +49,16 @@ describe('resolver-alias/index.js', () => {
     });
   });
 
+  it('change current working directory into sub directory of project and resolve exists modules', () => {
+
+    process.chdir('test');
+    delete require.cache[require.resolve('..')];
+    const newResolver = require('..');
+
+    normalModulePathArr.forEach((p) => {
+      const resolveModule = newResolver.resolve(p, sourceFile, alias);
+      assert(resolveModule.found, `normal modulePath ${p} isn't resolved`);
+    });
+  });
+
 });
