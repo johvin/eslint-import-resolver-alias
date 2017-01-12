@@ -8,14 +8,22 @@ const files = [
   `${moduleDir}/module1/abc.js`,
   `${moduleDir}/module2/styles/red.js`,
   `${moduleDir}/module2/smile.js`,
-  `${moduleDir}/polyfill2/polyfill.min.js`
+  `${moduleDir}/polyfill2/polyfill.min.js`,
+  `${moduleDir}/mod/a.js`
 ];
 
 if (!fs.existsSync(moduleDir)) {
   files.forEach(file => {
-    console.log('file', file)
     createEmptyFile(file);
   });
+  // 测试带有 node_modules 的路径的 resolver
+  fs.writeFileSync(
+    files[files.length - 1],
+    `
+    var resolver = require('../../..');
+    exports.abc = resolver.resolve('module1/abc', __filename);
+    `
+    );
 }
 
 function createEmptyFile (file) {

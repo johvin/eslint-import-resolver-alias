@@ -61,4 +61,9 @@ describe('resolver-alias/index.js', () => {
     });
   });
 
+  it('resolve a module which located in parent node_modules directory', () => {
+    const a = require('mod/a');
+    assert(a.abc.found && a.abc.path != null, 'exist module is not resolved');
+  });
+
 });

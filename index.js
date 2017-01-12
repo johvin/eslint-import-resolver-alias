@@ -45,7 +45,7 @@ exports.resolve = (modulePath, sourceFile, config) => {
     findPath = modulePath;
   }
 
-  const paths = resolveLookupPaths(findPath, sourceDir);
+  const paths = resolveLookupPaths(sourceDir);
   return findModulePath(findPath, paths);
 };
 
@@ -57,11 +57,15 @@ function findModulePath(request, paths) {
   };
 }
 
-function resolveLookupPaths(modulePath, absoluteSourceDir) {
+function resolveLookupPaths(absoluteSourceDir) {
   const paths = [];
   let curDir;
   let nextDir = absoluteSourceDir;
   do {
+    // not append node_modules to a path already ending with node_modules
+    while(nextDir.indexOf('node_modules', nextDir.length - 12) !== -1) {
+      nextDir = path.resolve(nextDir, '..');
+    }
     curDir = nextDir;
     let p = curDir + path.sep + 'node_modules';
     paths.push(p);
