@@ -5,7 +5,7 @@
   "main": "index.js",
   "license": "MIT",
   "name": "eslint-import-resolver-alias",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "a simple Node behavior import resolution plugin for eslint-plugin-import, supporting module alias.",
   "scripts": {
     "test": "mocha test/test.js --require test/setup.js",
