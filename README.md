@@ -4,7 +4,7 @@
 
 [version]: http://img.shields.io/npm/v/eslint-import-resolver-alias.svg?style=flat-square
 [build]: http://img.shields.io/travis/johvin/eslint-import-resolver-alias/master.svg?style=flat-square
-[download]: https://img.shields.io/npm/dt/eslint-import-resolver-alias.svg?style=flat
+[download]: https://img.shields.io/npm/dt/eslint-import-resolver-alias.svg?style=flat-square
 [david]: https://img.shields.io/david/johvin/eslint-import-resolver-alias.svg?style=flat-square
 [cover]: http://img.shields.io/coveralls/johvin/eslint-import-resolver-alias/master.svg?style=flat-square
 
