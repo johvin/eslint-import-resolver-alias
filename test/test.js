@@ -1,5 +1,6 @@
 const resolver = require('..');
 const assert = require('assert');
+const builtinModules = require('builtin-modules');
 
 describe('resolver-alias/index.js', () => {
   const sourceFile = module.filename;
@@ -8,6 +9,7 @@ describe('resolver-alias/index.js', () => {
     ['module3/heihei', 'module2/smile'],
     ['module3', 'module2']
   ];
+  
   const normalModulePathArr = [
     'module1/abc',
     '../package.json',
@@ -20,7 +22,6 @@ describe('resolver-alias/index.js', () => {
     'module3/styles/red',
     'polyfill'
   ];
-
   const noneExistModulePathArr = [
     'abc/ggg',
     'module2/bye',
@@ -32,6 +33,13 @@ describe('resolver-alias/index.js', () => {
     normalModulePathArr.forEach((p) => {
       const resolveModule = resolver.resolve(p, sourceFile, alias);
       assert(resolveModule.found, `normal modulePath ${p} isn't resolved`);
+    });
+  });
+
+  it('resolve Node.js builtin modules', () => {
+    builtinModules.forEach((m) => {
+      const resolveModule = resolver.resolve(m, sourceFile, alias);
+      assert(resolveModule.found, `builtin module '${m}' isn't resolved`);
     });
   });
 
