@@ -1,6 +1,7 @@
 const resolver = require('..');
 const assert = require('assert');
-const builtinModules = require('builtin-modules');
+
+const builtinModules = module.constructor.builtinModules || require('builtin-modules');
 
 describe('resolver-alias/index.js', () => {
   const sourceFile = module.filename;
