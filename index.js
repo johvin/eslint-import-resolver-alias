@@ -7,13 +7,14 @@
 const path = require('path');
 const coreModules = {};
 
-require('./core.json').forEach(function (m) {
+require('./core').forEach(function (m) {
   this[m] = true
 }, coreModules);
 
 exports.interfaceVersion = 2;
 
 const Module = module.constructor;
+const toString = Object.prototype.toString;
 
 exports.resolve = (modulePath, sourceFile, config) => {
   const isRelativePath = modulePath[0] === '.';
@@ -30,7 +31,7 @@ exports.resolve = (modulePath, sourceFile, config) => {
   }
 
   /* istanbul ignore else */
-  if (typeof config === 'object') {
+  if (toString.call(config) === '[object Array]') {
     for (let i = 0, len = config.length; i < len; i++) {
       const re = new RegExp(`(^|/)${config[i][0]}($|/)`);
       const match = modulePath.match(re);
@@ -67,8 +68,7 @@ function resolveLookupPaths(absoluteSourceDir) {
       nextDir = path.resolve(nextDir, '..');
     }
     curDir = nextDir;
-    let p = curDir + path.sep + 'node_modules';
-    paths.push(p);
+    paths.push(path.resolve(curDir, 'node_modules'));
     nextDir = path.resolve(curDir, '..');
   } while(nextDir !== curDir);
 
