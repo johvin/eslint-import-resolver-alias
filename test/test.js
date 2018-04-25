@@ -8,6 +8,8 @@ describe('resolver-alias/index.js', () => {
   const alias = [
     ['polyfill', 'polyfill2/polyfill.min.js'],
     ['module3/heihei', 'module2/smile'],
+    ['^core$', '../dist/core'],
+    ['core', 'module2/styles'],
     ['module3', 'module2']
   ];
   
@@ -21,7 +23,9 @@ describe('resolver-alias/index.js', () => {
   const aliasModulePathArr = [
     'module3/heihei',
     'module3/styles/red',
-    'polyfill'
+    'polyfill',
+    'core/red',
+    'core',
   ];
   const noneExistModulePathArr = [
     'abc/ggg',
