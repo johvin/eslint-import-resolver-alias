@@ -40,6 +40,7 @@ module.exports = {
     'import/resolver': {
       'alias': [
         ['babel-polyfill', 'babel-polyfill/dist/polyfill.min.js'],
+        ['helper', './utils/helper'],
         ['material-ui/DatePicker', '../custom/DatePicker'],
         ['material-ui', 'material-ui-ie10']
       ],
@@ -54,13 +55,9 @@ Note:
 - The items of alias config array is also array which contains 2 string
     + The first string represents the mapped module name or path
     + The second string represents the module alias, the actual module path os module name
+- The config item `['helper', './utils/helper']` means that the module `helper/*` will be resolved to `./utils/helper/*`. See [#3](https://github.com/johvin/eslint-import-resolver-alias/issues/3)
 - The order of 'material-ui/DatePicker' and 'material-ui' cannot be reversed, otherwise the alias rule 'material-ui/DatePicker' does not work
 - when the config is an empty array or not an array, the resolver falls back to native Node.js module import
-
-## Note
-
-`eslint-import-resolver-alias` 1.0.0 depends on part of `resolve` 1.1.7 which changes its format from 1.2.0 and the resolve dependency is resolved as ^1.1.7 in package.json dependencies settings. So update `eslint-import-resolver-alias` to the latest version is the correct way.
-
 
 ## CHANGELOG
 

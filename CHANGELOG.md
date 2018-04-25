@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-- add builtin modules resolve case to test
+- add builtin modules resolve test case and relevant dependencies
 
 ### Fixed
 - fix the bug that inner function `resolveLookupPaths` resolve `/node_modules` as `//node_modules`
