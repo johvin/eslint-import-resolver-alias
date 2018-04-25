@@ -1,0 +1,1 @@
+module.exports = module.constructor.builtinModules || Object.keys(process.binding('natives')).filter(m => m.indexOf('internal') !== 0);

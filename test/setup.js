@@ -23,7 +23,7 @@ if (!fs.existsSync(moduleDir)) {
     var resolver = require('../../..');
     exports.abc = resolver.resolve('module1/abc', __filename);
     `
-    );
+  );
 }
 
 function createEmptyFile (file) {
@@ -46,5 +46,4 @@ function createEmptyFile (file) {
   }
 
   fs.writeFileSync(file, '');
-
 }
