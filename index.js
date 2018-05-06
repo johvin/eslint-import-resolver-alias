@@ -20,11 +20,7 @@ const originExtensions = Module._extensions;
 function mockModuleLoader () {}
 
 exports.resolve = (modulePath, sourceFile, config) => {
-  // if modulePath is started with '.' (e.g. '.', '..', './a', '../a', '.ab.js')
-  // it is a relative path because the path like '.ab.js' is not a valid node package name
-  // see https://github.com/npm/validate-npm-package-name/blob/master/index.js
-  const isRelativePath = modulePath[0] === '.';
-  if (!isRelativePath && coreModules[modulePath]) {
+  if (coreModules[modulePath]) {
     return { found: true, path: null };
   }
 
@@ -39,36 +35,34 @@ exports.resolve = (modulePath, sourceFile, config) => {
 
   const { map, extensions } = config;
   const sourceDir = path.dirname(sourceFile);
-  let findPath;
+  let resolvePath = modulePath;
 
-  if (isRelativePath) {
-    // make findPath an absolute path
-    findPath = path.resolve(sourceDir, modulePath);
+  // if modulePath starts with '.' (e.g. '.', '..', './a', '../a', '.ab.js')
+  // it is a relative path because the path like '.ab.js' is not a valid node package name
+  // see https://github.com/npm/validate-npm-package-name/blob/master/index.js
+  if (modulePath[0] === '.') {
+    // make resolvePath an absolute path
+    resolvePath = path.resolve(sourceDir, modulePath);
 
     // actually, it doesn't matter what the second parameter is
-    // when findPath is an absolute path, see detail in
+    // when resolvePath is an absolute path, see detail in
     // Module._findPath source code
-    return findModulePath(findPath, null, extensions);
+    return findModulePath(resolvePath, null, extensions);
   }
 
-  /* istanbul ignore else */
   if (Array.isArray(map)) {
     for (let i = 0, len = map.length; i < len; i++) {
       const re = new RegExp(`(^|/)${map[i][0]}($|/)`);
       const match = modulePath.match(re);
       if (match) {
-        findPath = modulePath.replace(match[0], `${match[1]}${map[i][1]}${match[2]}`);
+        resolvePath = modulePath.replace(match[0], `${match[1]}${map[i][1]}${match[2]}`);
         break;
       }
     }
   }
 
-  if (!findPath) {
-    findPath = modulePath;
-  }
-
   const paths = resolveLookupPaths(sourceDir);
-  return findModulePath(findPath, paths, extensions);
+  return findModulePath(resolvePath, paths, extensions);
 };
 
 function getExtensions(extArray) {
