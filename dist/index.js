@@ -33,7 +33,10 @@ exports.resolve = (modulePath, sourceFile, config) => {
     config = {};
   }
 
-  const { map, extensions } = config;
+  // in order to be compatible with Node.js v4,
+  // give up destructure syntax
+  const map = config.map;
+  const extensions = config.extensions;
   const sourceDir = path.dirname(sourceFile);
   let resolvePath = modulePath;
 
