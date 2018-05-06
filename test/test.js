@@ -19,12 +19,13 @@ describe('resolver-alias/index.js', () => {
   const normalModulePathArr = [
     'module1/abc',
     'module1/happy',
+    'module1/no_extension_file',
     '../package',
     './test',
     'mocha',
     'fs'
   ];
-  const UnsupportedExtensionPathArr = [
+  const UnsetExtensionPathArr = [
     'module1/unsupported_extension'
   ];
   const aliasModulePathArr = [
@@ -56,10 +57,10 @@ describe('resolver-alias/index.js', () => {
     });
   });
 
-  it('unresolve modules with unsupported extension', () => {
-    UnsupportedExtensionPathArr.forEach((p) => {
+  it('unable to resolve the modules with unset extension', () => {
+    UnsetExtensionPathArr.forEach((p) => {
       const resolveModule = resolver.resolve(p, sourceFile, alias);
-      assert(!resolveModule.found, `modulePath ${p} with unsupported file extension is resolved`);
+      assert(!resolveModule.found, `modulePath ${p} with unset file extension is resolved`);
     });
   });
 
@@ -70,7 +71,7 @@ describe('resolver-alias/index.js', () => {
     });
   });
 
-  it('unresolve the modules that do not exist', () => {
+  it('unable to resolve the modules that do not exist', () => {
     noneExistModulePathArr.forEach((p) => {
       const resolveModule = resolver.resolve(p, sourceFile, alias);
       assert(!resolveModule.found, `none exist modulePath ${p} is resolved`);

@@ -7,7 +7,8 @@ const moduleDir = 'test/node_modules';
 const files = [
   `${moduleDir}/module1/abc.js`,
   `${moduleDir}/module1/happy.ts`,
-  `${moduleDir}/module1/unsupported_extension.tsx`,
+  `${moduleDir}/module1/no_extension_file`,
+  `${moduleDir}/module1/unset_extension.tsx`,
   `${moduleDir}/module2/styles/red.js`,
   `${moduleDir}/module2/smile.js`,
   `${moduleDir}/module2/nav.jsx`,
