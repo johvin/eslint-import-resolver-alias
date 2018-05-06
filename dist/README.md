@@ -17,7 +17,7 @@
 [license]: https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat-square
 
 
-This is a simple Node.js module import resolution plugin for [`eslint-plugin-import`](https://www.npmjs.com/package/eslint-plugin-import), which supports module alias and native Node.js module import.
+This is a simple Node.js module import resolution plugin for [`eslint-plugin-import`](https://www.npmjs.com/package/eslint-plugin-import), which supports native Node.js module resolution, module alias and custom file extensions.
 
 
 ## Installation
@@ -38,13 +38,15 @@ Pass this resolver and its parameters to `eslint-plugin-import` using your `esli
 module.exports = {
   settings: {
     'import/resolver': {
-      'alias': [
-        ['babel-polyfill', 'babel-polyfill/dist/polyfill.min.js'],
-        ['helper', './utils/helper'],
-        ['material-ui/DatePicker', '../custom/DatePicker'],
-        ['material-ui', 'material-ui-ie10']
-      ],
-      // node: true
+      alias: {
+        map: [
+          ['babel-polyfill', 'babel-polyfill/dist/polyfill.min.js'],
+          ['helper', './utils/helper'],
+          ['material-ui/DatePicker', '../custom/DatePicker'],
+          ['material-ui', 'material-ui-ie10']
+        ],
+        extensions: ['.ts', '.js', '.jsx', '.json']
+      }
     }
   }
 };
@@ -52,9 +54,41 @@ module.exports = {
 
 Note:
 
-- The items of alias config array is also array which contains 2 string
+- The alias config object contains two properties, `map` and `extensions`, both of which are array types
+- The item of `map` array is also array type which contains 2 string
     + The first string represents the mapped module name or path
-    + The second string represents the module alias, the actual module path os module name
-- The config item `['helper', './utils/helper']` means that the module `helper/*` will be resolved to `./utils/helper/*`. See [#3](https://github.com/johvin/eslint-import-resolver-alias/issues/3)
+    + The second string represents the module alias, the actual module path or name
+- The `map` item `['helper', './utils/helper']` means that the module `helper/*` will be resolved to `./utils/helper/*`. See [#3](https://github.com/johvin/eslint-import-resolver-alias/issues/3)
 - The order of 'material-ui/DatePicker' and 'material-ui' cannot be reversed, otherwise the alias rule 'material-ui/DatePicker' does not work
-- when the config is an empty array or not an array, the resolver falls back to native Node.js module import
+- The default value of `extensions` property is `['.js', '.json', '.node']` if it is assigned to an empty array or not specified.
+
+*If the `extensions` property is not specified, the config object can be simplified to the `map` array.*
+
+```js
+// .eslintrc.js
+module.exports = {
+  settings: {
+    'import/resolver': {
+      alias: [
+        ['babel-polyfill', 'babel-polyfill/dist/polyfill.min.js'],
+        ['helper', './utils/helper'],
+        ['material-ui/DatePicker', '../custom/DatePicker'],
+        ['material-ui', 'material-ui-ie10']
+      ]
+    }
+  }
+};
+```
+
+When the config is not a valid object (such as `true`), the resolver falls back to native Node.js module resolution.
+
+```js
+// .eslintrc.js
+module.exports = {
+  settings: {
+    'import/resolver': {
+      alias: true
+    }
+  }
+};
+```
