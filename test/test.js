@@ -5,24 +5,32 @@ const builtinModules = module.constructor.builtinModules || require('builtin-mod
 
 describe('resolver-alias/index.js', () => {
   const sourceFile = module.filename;
-  const alias = [
-    ['polyfill', 'polyfill2/polyfill.min.js'],
-    ['module3/heihei', 'module2/smile'],
-    ['^core$', '../dist/core'],
-    ['core', 'module2/styles'],
-    ['module3', 'module2']
-  ];
-  
+  const alias = {
+    map: [
+      ['polyfill', 'polyfill2/polyfill.min.js'],
+      ['module3/heihei', 'module2/smile'],
+      ['^core$', '../dist/core'],
+      ['core', 'module2/styles'],
+      ['module3', 'module2']
+    ],
+    extensions: ['.js', '.ts', '.jsx', '.json']
+  };
+
   const normalModulePathArr = [
     'module1/abc',
-    '../package.json',
+    'module1/happy',
+    '../package',
     './test',
     'mocha',
     'fs'
   ];
+  const UnsupportedExtensionPathArr = [
+    'module1/unsupported_extension'
+  ];
   const aliasModulePathArr = [
     'module3/heihei',
     'module3/styles/red',
+    'module3/nav',
     'polyfill',
     'core/red',
     'core',
@@ -34,6 +42,13 @@ describe('resolver-alias/index.js', () => {
     './test.json'
   ];
 
+  it('resolve Node.js builtin modules', () => {
+    builtinModules.forEach((m) => {
+      const resolveModule = resolver.resolve(m, sourceFile, alias);
+      assert(resolveModule.found, `builtin module '${m}' isn't resolved`);
+    });
+  });
+
   it('resolve normal node modules', () => {
     normalModulePathArr.forEach((p) => {
       const resolveModule = resolver.resolve(p, sourceFile, alias);
@@ -41,10 +56,10 @@ describe('resolver-alias/index.js', () => {
     });
   });
 
-  it('resolve Node.js builtin modules', () => {
-    builtinModules.forEach((m) => {
-      const resolveModule = resolver.resolve(m, sourceFile, alias);
-      assert(resolveModule.found, `builtin module '${m}' isn't resolved`);
+  it('unresolve modules with unsupported extension', () => {
+    UnsupportedExtensionPathArr.forEach((p) => {
+      const resolveModule = resolver.resolve(p, sourceFile, alias);
+      assert(!resolveModule.found, `modulePath ${p} with unsupported file extension is resolved`);
     });
   });
 
