@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## [1.1.0]
+## [1.1.0] - 2018-05-06
 ### Added
 - support custom file extensions
 
@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - update usage to readme
 
 
-## [1.0.4]
+## [1.0.4] - 2018-04-25
 ### Added
 - add builtin modules resolve test case and relevant dependencies
 
