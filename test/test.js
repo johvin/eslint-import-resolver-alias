@@ -17,6 +17,7 @@ describe('resolver-alias/index.js', () => {
   };
 
   const normalModulePathArr = [
+    'module1',
     'module1/abc',
     'module1/happy',
     'module1/no_extension_file',

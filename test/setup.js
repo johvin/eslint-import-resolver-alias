@@ -5,6 +5,7 @@ const path = require('path');
 
 const moduleDir = 'test/node_modules';
 const files = [
+  `${moduleDir}/module1/index.js`,
   `${moduleDir}/module1/abc.js`,
   `${moduleDir}/module1/happy.ts`,
   `${moduleDir}/module1/no_extension_file`,
