@@ -6,7 +6,7 @@
   "scripts": {
     "release": "node build/release.js",
     "test": "mocha test/test.js --require test/setup.js",
-    "cov": "istanbul cover node_modules/mocha/bin/_mocha -i index.js -- test/test.js --require test/setup.js"
+    "cov": "istanbul cover node_modules/mocha/bin/_mocha -- test/test.js --require test/setup.js"
   },
   "keywords": [
     "eslint",

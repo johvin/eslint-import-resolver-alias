@@ -44,6 +44,14 @@ describe('resolver-alias/index.js', () => {
     './test.json'
   ];
 
+  beforeEach(() => {
+    // empty Module path cache
+    const pathCache = module.constructor._pathCache;
+    Object.keys(pathCache).forEach(function (key) {
+      delete this[key];
+    }, pathCache);
+  });
+
   it('resolve Node.js builtin modules', () => {
     builtinModules.forEach((m) => {
       const resolveModule = resolver.resolve(m, sourceFile, alias);
@@ -51,10 +59,22 @@ describe('resolver-alias/index.js', () => {
     });
   });
 
-  it('resolve normal node modules', () => {
+  it('resolve normal node modules with custom file extensions', () => {
     normalModulePathArr.forEach((p) => {
       const resolveModule = resolver.resolve(p, sourceFile, alias);
       assert(resolveModule.found, `normal modulePath ${p} isn't resolved`);
+    });
+  });
+
+  it('resolve normal node modules without custom file extensions', () => {
+    normalModulePathArr.forEach((p) => {
+      const resolveModule = resolver.resolve(p, sourceFile, alias.map);
+      // happy.ts
+      if (p.indexOf('happy') !== -1) {
+        assert(!resolveModule.found, `normal modulePath ${p} with custom file extension is resolved`);
+      } else {
+        assert(resolveModule.found, `normal modulePath ${p} isn't resolved`);
+      }
     });
   });
 
