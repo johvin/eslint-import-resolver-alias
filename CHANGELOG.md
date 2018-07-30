@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.1] - 2018-07-30
+### Fixed
+- fix the bug that the module mapped to a relative path can not be resolved. see [#5][issue5]
+
+### Changed
+- update test case
+- update changelog
+- update usage to readme
+- add more package keywords
+
+
 ## [1.1.0] - 2018-05-06
 ### Added
 - support custom file extensions
@@ -51,3 +62,6 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - support resolve node modules with alias config
 - support resolve normal node modules, including Node.js core modules and other third party modules
 - support resolve relative path modules
+
+<!-- references -->
+[issue5]: https://github.com/johvin/eslint-import-resolver-alias/issues/5
