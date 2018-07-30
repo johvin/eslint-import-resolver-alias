@@ -64,10 +64,20 @@ exports.resolve = (modulePath, sourceFile, config) => {
     }
   }
 
+  
+
+  // there is a relative path mapping in alias.map,
+  // the relative path is relative to the project root directory
+  if (resolvePath[0] === '.') {
+    resolvePath = path.resolve(process.cwd(), resolvePath);
+    return findModulePath(resolvePath, null, extensions);
+  }
+
   const paths = resolveLookupPaths(sourceDir);
   return findModulePath(resolvePath, paths, extensions);
 };
 
+// get extension object like Module._extensions
 function getExtensions(extArray) {
   if (Array.isArray(extArray) && extArray.length > 0) {
     return extArray.reduce((a, b) => {
@@ -79,6 +89,7 @@ function getExtensions(extArray) {
   return null;
 }
 
+// find module path according to support file extensions.
 function findModulePath(request, paths, extArray) {
   if (extArray) {
     // little trick to make Node.js native `Module._findPath` method
@@ -99,10 +110,15 @@ function findModulePath(request, paths, extArray) {
   };
 }
 
+// resolve node_modules lookup paths
+// node.js native resolveLookupPaths's implementation contains various situation,
+// such as sourceFile-located directory, current working directory and etc.
+// which is a little more complex for this situation
 function resolveLookupPaths(absoluteSourceDir) {
   let paths;
 
   // use Node.js native node_modules lookup paths resolution
+  /* istanbul ignore else */
   if (Module._nodeModulePaths) {
     paths = Module._nodeModulePaths(absoluteSourceDir);
   } else {

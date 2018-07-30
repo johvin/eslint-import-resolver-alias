@@ -17,7 +17,7 @@
 [license]: https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat-square
 
 
-This is a simple Node.js module import resolution plugin for [`eslint-plugin-import`](https://www.npmjs.com/package/eslint-plugin-import), which supports native Node.js module resolution, module alias and custom file extensions.
+This is a simple Node.js module import resolution plugin for [`eslint-plugin-import`](https://www.npmjs.com/package/eslint-plugin-import), which supports native Node.js module resolution, module alias/mapping and custom file extensions.
 
 
 ## Installation
@@ -58,7 +58,7 @@ Note:
 - The item of `map` array is also array type which contains 2 string
     + The first string represents the mapped module name or path
     + The second string represents the module alias, the actual module path or name
-- The `map` item `['helper', './utils/helper']` means that the module `helper/*` will be resolved to `./utils/helper/*`. See [#3](https://github.com/johvin/eslint-import-resolver-alias/issues/3)
+- The `map` item `['helper', './utils/helper']` means that the modules which matches `helper` or `helper/*` will be resolved to `./utils/helper` or `./utils/helper/*` which is located relative to the `process current working directory` (almost the project root directory). See [#3](https://github.com/johvin/eslint-import-resolver-alias/issues/3)
 - The order of 'material-ui/DatePicker' and 'material-ui' cannot be reversed, otherwise the alias rule 'material-ui/DatePicker' does not work
 - The default value of `extensions` property is `['.js', '.json', '.node']` if it is assigned to an empty array or not specified.
 
