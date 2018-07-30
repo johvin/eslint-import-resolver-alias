@@ -1,20 +1,32 @@
 {
   "name": "eslint-import-resolver-alias",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "a simple Node behavior import resolution plugin for eslint-plugin-import, supporting module alias.",
   "main": "index.js",
   "scripts": {
     "release": "node build/release.js",
     "test": "mocha test/test.js --require test/setup.js",
-    "cov": "istanbul cover node_modules/mocha/bin/_mocha -i index.js -- test/test.js --require test/setup.js"
+    "cov": "istanbul cover node_modules/mocha/bin/_mocha -- test/test.js --require test/setup.js"
   },
   "keywords": [
     "eslint",
     "eslintplugin",
-    "modules",
-    "alias",
     "eslint-plugin-import",
-    "import-resolver"
+    "eslint-import-resolver",
+    "import-resolver",
+    "resolver",
+    "resolve",
+    "resolution",
+    "alias",
+    "mapping",
+    "rewrite",
+    "rename",
+    "webpack",
+    "module",
+    "node-native",
+    "module-resolver",
+    "import",
+    "require"
   ],
   "engines": {
     "node": ">= 4"
