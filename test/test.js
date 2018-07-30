@@ -72,6 +72,9 @@ describe('resolver-alias/index.js', () => {
   });
 
   it('resolve normal modules which end with native support file extensions without custom file extensions', () => {
+    const alias2 = Object.assign({}, alias, {
+      extensions: []
+    });
     normalModulePathArr.forEach((p) => {
       const resolveModule = resolver.resolve(p, sourceFile, alias.map);
       // happy.ts
@@ -80,6 +83,15 @@ describe('resolver-alias/index.js', () => {
       } else {
         assert(resolveModule.found, `normal modulePath ${p} isn't resolved`);
       }
+
+      const resolveModule2 = resolver.resolve(p, sourceFile, alias2);
+      // happy.ts
+      if (p.indexOf('happy') !== -1) {
+        assert(!resolveModule2.found, `modulePath ${p} with custom file extension is resolved`);
+      } else {
+        assert(resolveModule2.found, `normal modulePath ${p} isn't resolved`);
+      }
+
     });
   });
 
