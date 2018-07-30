@@ -9,9 +9,11 @@ describe('resolver-alias/index.js', () => {
     map: [
       ['polyfill', 'polyfill2/polyfill.min.js'],
       ['module3/heihei', 'module2/smile'],
-      ['^core$', '../dist/core'],
+      ['^core$', './dist/core'],
       ['core', 'module2/styles'],
-      ['module3', 'module2']
+      ['module3', 'module2'],
+      ['srcCore', './core'],
+      ['relativeSetup', './test/setup']
     ],
     extensions: ['.js', '.ts', '.jsx', '.json']
   };
@@ -23,8 +25,7 @@ describe('resolver-alias/index.js', () => {
     'module1/no_extension_file',
     '../package',
     './test',
-    'mocha',
-    'fs'
+    'mocha'
   ];
   const UnsetExtensionPathArr = [
     'module1/unsupported_extension'
@@ -36,6 +37,10 @@ describe('resolver-alias/index.js', () => {
     'polyfill',
     'core/red',
     'core',
+  ];
+  const aliasModulePathArrRelativeToProjectRootDir = [
+    'srcCore',
+    'relativeSetup'
   ];
   const noneExistModulePathArr = [
     'abc/ggg',
@@ -59,26 +64,41 @@ describe('resolver-alias/index.js', () => {
     });
   });
 
-  it('resolve normal node modules with custom file extensions', () => {
+  it('resolve modules with custom file extensions', () => {
     normalModulePathArr.forEach((p) => {
       const resolveModule = resolver.resolve(p, sourceFile, alias);
-      assert(resolveModule.found, `normal modulePath ${p} isn't resolved`);
+      assert(resolveModule.found, `modulePath ${p} isn't resolved`);
     });
   });
 
-  it('resolve normal node modules without custom file extensions', () => {
+  it('resolve normal modules which end with native support file extensions without custom file extensions', () => {
     normalModulePathArr.forEach((p) => {
       const resolveModule = resolver.resolve(p, sourceFile, alias.map);
       // happy.ts
       if (p.indexOf('happy') !== -1) {
-        assert(!resolveModule.found, `normal modulePath ${p} with custom file extension is resolved`);
+        assert(!resolveModule.found, `modulePath ${p} with custom file extension is resolved`);
       } else {
         assert(resolveModule.found, `normal modulePath ${p} isn't resolved`);
       }
     });
   });
 
-  it('unable to resolve the modules with unset extension', () => {
+  it('unable to resolve the modules which end with native support file extensions with custom file extensions which do not contains the native support file extensions', () => {
+    const alias2 = Object.assign({}, alias, {
+      extensions: ['.ts']
+    });
+
+    normalModulePathArr.forEach((p) => {
+      const resolveModule = resolver.resolve(p, sourceFile, alias2);
+      if (/(happy|no_extension_file)$/.test(p)) {
+        assert(resolveModule.found, `modulePath ${p} with custom file extension isn't resolved`);
+      } else {
+        assert(!resolveModule.found, `normal modulePath ${p} with custom file extensions which do not contains the native support file extensions is resolved`);
+      }
+    });
+  });
+
+  it('unable to resolve the modules with unset file extension', () => {
     UnsetExtensionPathArr.forEach((p) => {
       const resolveModule = resolver.resolve(p, sourceFile, alias);
       assert(!resolveModule.found, `modulePath ${p} with unset file extension is resolved`);
@@ -92,6 +112,13 @@ describe('resolver-alias/index.js', () => {
     });
   });
 
+  it('resolve alias modules which are relative to the project root directory', () => {
+    aliasModulePathArrRelativeToProjectRootDir.forEach((p) => {
+      const resolveModule = resolver.resolve(p, sourceFile, alias);
+      assert(resolveModule.found, `alias modulePath ${p} isn't resolved`);
+    });
+  });
+
   it('unable to resolve the modules that do not exist', () => {
     noneExistModulePathArr.forEach((p) => {
       const resolveModule = resolver.resolve(p, sourceFile, alias);
@@ -100,7 +127,6 @@ describe('resolver-alias/index.js', () => {
   });
 
   it('change current working directory into sub directory of project and resolve exists modules', () => {
-
     process.chdir('test');
     delete require.cache[require.resolve('..')];
     const newResolver = require('..');
