@@ -118,6 +118,7 @@ function resolveLookupPaths(absoluteSourceDir) {
   let paths;
 
   // use Node.js native node_modules lookup paths resolution
+  /* istanbul ignore else */
   if (Module._nodeModulePaths) {
     paths = Module._nodeModulePaths(absoluteSourceDir);
   } else {
