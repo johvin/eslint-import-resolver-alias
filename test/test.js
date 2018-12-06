@@ -11,6 +11,7 @@ describe('resolver-alias/index.js', () => {
       ['module3/heihei', 'module2/smile'],
       ['^core$', './dist/core'],
       ['core', 'module2/styles'],
+      ['red', './nothing'], // this prefix map should not impact paths which contain red and not starts with red
       ['module3', 'module2'],
       ['srcCore', './core'],
       ['relativeSetup', './test/setup']

@@ -62,8 +62,8 @@ Note:
 - The item of `map` array is also array type which contains 2 string
     + The first string represents the mapped module name or path
     + The second string represents the module alias, the actual module path or name
-- The `map` item `['helper', './utils/helper']` means that the modules which matches `helper` or `helper/*` will be resolved to `./utils/helper` or `./utils/helper/*` which is located relative to the `process current working directory` (almost the project root directory). See [#3](https://github.com/johvin/eslint-import-resolver-alias/issues/3)
-- The order of 'material-ui/DatePicker' and 'material-ui' cannot be reversed, otherwise the alias rule 'material-ui/DatePicker' does not work
+- The `map` item `['helper', './utils/helper']` means that the modules' paths which contain the word `helper` will be resolved to new paths (e.g. `helper => ./utils/helper`, `helper/datefn => ./utils/helper/datefn`) which are located relative to the `process current working directory` (almost the project root directory). See [issue #3](https://github.com/johvin/eslint-import-resolver-alias/issues/3)
+- The order of 'material-ui/DatePicker' and 'material-ui' cannot be reversed, otherwise the alias rule 'material-ui/DatePicker' does not work. See [issue #7](https://github.com/johvin/eslint-import-resolver-alias/issues/7)
 - The default value of `extensions` property is `['.js', '.json', '.node']` if it is assigned to an empty array or not specified.
 
 *If the `extensions` property is not specified, the config object can be simplified to the `map` array.*
