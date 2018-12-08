@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [1.1.2] - 2018-12-08
+### Fixed
+- fix the bug to not resolve `path/to/file` to `path/from/file` with the config `['to', 'from']`. see [#7][issue7]
+
+### Changed
+- update test case
+- update changelog
+- update usage to readme
+
+
 ## [1.1.1] - 2018-07-30
 ### Fixed
 - fix the bug that the module mapped to a relative path can not be resolved. see [#5][issue5]
@@ -65,3 +75,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 <!-- references -->
 [issue5]: https://github.com/johvin/eslint-import-resolver-alias/issues/5
+[issue7]: https://github.com/johvin/eslint-import-resolver-alias/issues/7
