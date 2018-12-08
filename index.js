@@ -55,12 +55,10 @@ exports.resolve = (modulePath, sourceFile, config) => {
 
   if (Array.isArray(map)) {
     for (let i = 0, len = map.length; i < len; i++) {
-      // the actual module path is an absolute path or starts with '.'
-      const isPrefixMap = /^(\.|\/)/.test(map[i][1]);
-      const re = new RegExp(`(${isPrefixMap ? '^' : '^|/'})${map[i][0]}($|/)`);
+      const re = new RegExp(`^${map[i][0]}($|/)`);
       const match = modulePath.match(re);
       if (match) {
-        resolvePath = modulePath.replace(match[0], `${match[1]}${map[i][1]}${match[2]}`);
+        resolvePath = modulePath.replace(match[0], `${map[i][1]}${match[1]}`);
         break;
       }
     }
