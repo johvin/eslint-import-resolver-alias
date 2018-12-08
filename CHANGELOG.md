@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - update test case
+- update coverage for node 10 & 11
 - update changelog
 - update usage to readme
 

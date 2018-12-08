@@ -55,16 +55,14 @@ exports.resolve = (modulePath, sourceFile, config) => {
 
   if (Array.isArray(map)) {
     for (let i = 0, len = map.length; i < len; i++) {
-      const re = new RegExp(`(^|/)${map[i][0]}($|/)`);
+      const re = new RegExp(`^${map[i][0]}($|/)`);
       const match = modulePath.match(re);
       if (match) {
-        resolvePath = modulePath.replace(match[0], `${match[1]}${map[i][1]}${match[2]}`);
+        resolvePath = modulePath.replace(match[0], `${map[i][1]}${match[1]}`);
         break;
       }
     }
   }
-
-  
 
   // there is a relative path mapping in alias.map,
   // the relative path is relative to the project root directory
