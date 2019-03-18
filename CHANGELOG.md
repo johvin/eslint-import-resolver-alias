@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [1.1.2] - 2018-12-08
 ### Fixed
-- fix the bug to not resolve `path/to/file` to `path/from/file` with the config `['to', 'from']`. see [#7][issue7]
+- fix a bug in order to not resolve `path/to/file` to `path/from/file` with the config `['to', 'from']`. see [#7][issue7]
 
 ### Changed
 - update test case
