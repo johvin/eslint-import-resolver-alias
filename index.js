@@ -7,6 +7,8 @@
 const path = require('path');
 const coreModules = Object.create(null);
 
+console.log('test ensure package changed');
+
 require('./core').forEach(function (m) {
   this[m] = true
 }, coreModules);
