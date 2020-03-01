@@ -150,6 +150,11 @@ describe('resolver-alias/index.js', () => {
     });
   });
 
+  it('unable to resolve array modules that do not exist', () => {
+    const resolveModule = resolver.resolve('arrayPaths/ghi', sourceFile, alias);
+    assert(!resolveModule.found, `alias modulePath arrayPaths/ghi is resolved`);
+  });
+
   it('unable to resolve the modules that do not exist', () => {
     noneExistModulePathArr.forEach((p) => {
       const resolveModule = resolver.resolve(p, sourceFile, alias);
