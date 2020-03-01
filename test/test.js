@@ -14,7 +14,8 @@ describe('resolver-alias/index.js', () => {
       ['red', './nothing'], // should not impact the paths which contain red and not starts with red
       ['module3', 'module2'],
       ['srcCore', './core'],
-      ['relativeSetup', './test/setup']
+      ['relativeSetup', './test/setup'],
+      ['arrayPaths', ['has_abc', 'has_none', 'has_def']],
     ],
     extensions: ['.js', '.ts', '.jsx', '.json']
   };
@@ -42,6 +43,16 @@ describe('resolver-alias/index.js', () => {
   const aliasModulePathArrRelativeToProjectRootDir = [
     'srcCore',
     'relativeSetup'
+  ];
+  const aliasModuleArrayPathArr = [
+    'module3/heihei',
+    'module3/styles/red',
+    'module3/nav',
+    'polyfill',
+    'core/red',
+    'core',
+    'arrayPaths/abc',
+    'arrayPaths/def',
   ];
   const noneExistModulePathArr = [
     'abc/ggg',
@@ -132,6 +143,18 @@ describe('resolver-alias/index.js', () => {
     });
   });
 
+  it('resolve alias modules that have an array of actual modules or paths', () => {
+    aliasModuleArrayPathArr.forEach((p) => {
+      const resolveModule = resolver.resolve(p, sourceFile, alias);
+      assert(resolveModule.found, `alias modulePath ${p} isn't resolved`);
+    });
+  });
+
+  it('unable to resolve array modules that do not exist', () => {
+    const resolveModule = resolver.resolve('arrayPaths/ghi', sourceFile, alias);
+    assert(!resolveModule.found, `alias modulePath arrayPaths/ghi is resolved`);
+  });
+
   it('unable to resolve the modules that do not exist', () => {
     noneExistModulePathArr.forEach((p) => {
       const resolveModule = resolver.resolve(p, sourceFile, alias);
@@ -154,5 +177,4 @@ describe('resolver-alias/index.js', () => {
     const a = require('mod/a');
     assert(a.abc.found && a.abc.path != null, 'exist module is not resolved');
   });
-
 });

@@ -14,7 +14,9 @@ const files = [
   `${moduleDir}/module2/smile.js`,
   `${moduleDir}/module2/nav.jsx`,
   `${moduleDir}/polyfill2/polyfill.min.js`,
-  `${moduleDir}/mod/a.js`
+  `${moduleDir}/has_abc/abc.js`,
+  `${moduleDir}/has_def/def.js`,
+  `${moduleDir}/mod/a.js`,
 ];
 
 files.forEach(file => {

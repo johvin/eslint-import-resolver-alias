@@ -47,7 +47,8 @@ module.exports = {
           ['babel-polyfill', 'babel-polyfill/dist/polyfill.min.js'],
           ['helper', './utils/helper'],
           ['material-ui/DatePicker', '../custom/DatePicker'],
-          ['material-ui', 'material-ui-ie10']
+          ['material-ui', 'material-ui-ie10'],
+          ['lib', ['app/lib', 'common/lib']]
         ],
         extensions: ['.ts', '.js', '.jsx', '.json']
       }
@@ -62,6 +63,7 @@ Note:
 - The item of `map` array is also array type which contains 2 string
     + The first string represents the alias of module name or path
     + The second string represents the actual module name or path
+    + The second string may also be an array that is evaluated in order, with the first found used as resolved
 - The `map` item `['helper', './utils/helper']` means that the modules which match `helper` or `helper/*` will be resolved to `./utils/helper` or `./utils/helper/*` which are located relative to the `process current working directory` (almost the project root directory). If you just want to resolve `helper` to `./utils/helper`, use `['^helper$', './utils/helper']` instead. See [issue #3](https://github.com/johvin/eslint-import-resolver-alias/issues/3)
 - The order of 'material-ui/DatePicker' and 'material-ui' cannot be reversed, otherwise the alias rule 'material-ui/DatePicker' does not work
 - The default value of `extensions` property is `['.js', '.json', '.node']` if it is assigned to an empty array or not specified

@@ -58,22 +58,38 @@ exports.resolve = (modulePath, sourceFile, config) => {
       const re = new RegExp(`^${map[i][0]}($|/)`);
       const match = modulePath.match(re);
       if (match) {
-        resolvePath = modulePath.replace(match[0], `${map[i][1]}${match[1]}`);
+        resolvePath = getResolvePath(modulePath, match, map[i][1], extensions, sourceDir);
         break;
       }
     }
   }
 
-  // there is a relative path mapping in alias.map,
-  // the relative path is relative to the project root directory
-  if (resolvePath[0] === '.') {
-    resolvePath = path.resolve(process.cwd(), resolvePath);
-    return findModulePath(resolvePath, null, extensions);
-  }
-
-  const paths = resolveLookupPaths(sourceDir);
-  return findModulePath(resolvePath, paths, extensions);
+  return smartFindModulePath(resolvePath, extensions, sourceDir);
 };
+
+// Get the resolved path
+function getResolvePath(alias, match, actual, extensions, sourceDir) {
+  if (Array.isArray(actual)) {
+    let resolvePath, found;
+
+    // Iterate through all possible paths
+    for (let i = 0; i < actual.length; i++) {
+      resolvePath = alias.replace(match[0], `${actual[i]}${match[1]}`);
+      found = smartFindModulePath(resolvePath, extensions, sourceDir);
+
+      // If path resolves, use it, don't check any more
+      if (found.found) {
+        return resolvePath;
+      }
+    }
+
+    // If no paths resolve, still return final path, we want to know if no paths resolve
+    return resolvePath;
+  }
+  else {
+    return alias.replace(match[0], `${actual}${match[1]}`);
+  }
+}
 
 // get extension object like Module._extensions
 function getExtensions(extArray) {
@@ -85,6 +101,19 @@ function getExtensions(extArray) {
   }
 
   return null;
+}
+
+// Find module path, taking into account relative paths
+function smartFindModulePath(resolvePath, extensions, sourceDir) {
+  // there is a relative path mapping in alias.map,
+  // the relative path is relative to the project root directory
+  if (resolvePath[0] === '.') {
+    resolvePath = path.resolve(process.cwd(), resolvePath);
+    return findModulePath(resolvePath, null, extensions);
+  }
+
+  const paths = resolveLookupPaths(sourceDir);
+  return findModulePath(resolvePath, paths, extensions);
 }
 
 // find module path according to support file extensions.
