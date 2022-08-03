@@ -58,7 +58,7 @@ exports.resolve = (modulePath, sourceFile, config) => {
       const re = new RegExp(`^${map[i][0]}($|/)`);
       const match = modulePath.match(re);
       if (match) {
-        resolvePath = modulePath.replace(match[0], `${map[i][1]}${match[1]}`);
+        resolvePath = modulePath.replace(match[0], `${map[i][1]}${match.slice(1).join('')}`);
         break;
       }
     }
